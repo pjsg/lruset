@@ -35,8 +35,10 @@ class LRUSet(object):
                 # linked list.
                 node.previous.next = node.next
                 node.next.previous = node.previous
+                node.previous = self._tail
                 self._tail.next = node
                 self._tail = node
+                node.next = None
             else:
                 self.remove(item)
                 self.add(item)
@@ -75,6 +77,7 @@ class LRUSet(object):
             # performance (~8-9% improvement).
             del self._lookup_table[self._head.value]
             self._head = self._head.next
+            self._head.previous = None
             self.current_size -= 1
 
     def remove(self, item):
@@ -84,8 +87,16 @@ class LRUSet(object):
         # be removed.
         if node is self._head:
             self._head = node.next
+            if self._head:
+                self._head.previous = None
+            if self._tail is self._head:
+                self._tail = None
         elif node is self._tail:
             self._tail = node.previous
+            if self._tail is self._head:
+                self._tail = None
+            if self._tail:
+                self._tail.next = None
         else:
             node.previous.next = node.next
             node.next.previous = node.previous

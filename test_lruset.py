@@ -6,6 +6,9 @@ import time
 import lruset
 import clruset
 
+import math
+import random
+
 
 class TestLRUSet(unittest.TestCase):
     def create_set(self, size):
@@ -215,6 +218,13 @@ class TestLRUSet(unittest.TestCase):
         del s
         del ob
         self.assertEqual(id(list(i)[-1]), ob_id)
+
+    def testRandom(self):
+        s = self.create_set(50)
+        for i in xrange(1000000):
+            a = str(int(math.sqrt(random.randrange(100000))))
+            if a not in s:
+                s.add(a)
 
 
 class TestCLRUSet(TestLRUSet):
