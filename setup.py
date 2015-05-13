@@ -2,7 +2,7 @@ from setuptools import setup, Extension
 
 setup(
     name='lruset',
-    version='0.1',
+    version='0.2',
     description="A fixed size set with LRU eviction.",
     license='BSD',
     author='James Saryerwinnie',
